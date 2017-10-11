@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.brandonzamudio.softtim.mobilityusuario.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.brandonzamudio.softtim.mobilityconductor.MainActivity"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvEstado"
+        android:layout_above="@+id/cancelarServicio" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#e4ffffff"
+        android:enabled="false"
+        android:hint="Origen:"
+        android:padding="5sp"
+        android:text="Tu ubicacion "
+        android:visibility="visible"
+        android:layout_below="@+id/place_details"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/autoCompleteTextView"
+        android:layout_alignLeft="@+id/autoCompleteTextView"
+        android:layout_alignRight="@+id/autoCompleteTextView"
+        android:layout_alignStart="@+id/autoCompleteTextView"
+        android:layout_below="@+id/autoCompleteTextView"
+        android:layout_marginTop="10sp"
+        android:background="#e4ffffff"
+        android:hint="Destino:"
+        android:padding="5sp"
+        android:visibility="visible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/place_details"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/place_attribution"
+        android:layout_toRightOf="@+id/place_details"
+        android:layout_toEndOf="@+id/place_details"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/buttonSolicitarServicio"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:background="@color/colorPrimary"
+        android:text="Solicitar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+        android:textColor="?attr/colorButtonNormal"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/buttonCancelarSolicitar"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/buttonSolicitarServicio"
+        android:layout_toStartOf="@+id/buttonSolicitarServicio"
+        android:background="@color/colorAccent"
+        android:text="Cancelar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+        android:textColor="@color/colorPrimary"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/cancelarServicio"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:background="#d50000"
+        android:text="Cancelar servicio"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvDenue"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:paddingLeft="5sp"
+        android:paddingRight="5sp"
+        android:text="Estado . . ."
+        android:textAppearance="@style/TextAppearance.StatusBar.EventContent.Info"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bPayPal"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvEstado"
+        android:layout_margin="10sp"
+        android:background="@color/colorPrimary"
+        android:text="Pagar con PayPal"
+        android:textColor="@android:color/background_light"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0sp"
+        android:layout_height="0sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/fondoCostos"
+        android:layout_width="match_parent"
+        android:layout_height="78sp"
+        android:layout_above="@+id/buttonSolicitarServicio"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#86ffffff"
+        android:gravity="center"
+        android:text="Calculando costos..."
+        android:textColor="#121212"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bUnoUno"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvUnoUno"
+        android:layout_centerHorizontal="true"
+        android:text="Taxi"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvUnoUno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonSolicitarServicio"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10sp"
+        android:gravity="center"
+        android:text="Costo 1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bDosUno"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvDosUno"
+        android:layout_marginEnd="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_toLeftOf="@+id/buttonSolicitarServicio"
+        android:layout_toStartOf="@+id/buttonSolicitarServicio"
+        android:text="Taxi"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvDosUno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCancelarSolicitar"
+        android:layout_alignEnd="@+id/bDosUno"
+        android:layout_alignLeft="@+id/bDosUno"
+        android:layout_alignRight="@+id/bDosUno"
+        android:layout_alignStart="@+id/bDosUno"
+        android:layout_marginBottom="10sp"
+        android:layout_toLeftOf="@+id/buttonSolicitarServicio"
+        android:layout_toStartOf="@+id/buttonSolicitarServicio"
+        android:gravity="center"
+        android:text="costo 2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bDosDos"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvDosDos"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="Libre"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvDosDos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonSolicitarServicio"
+        android:layout_alignEnd="@+id/bDosDos"
+        android:layout_alignLeft="@+id/bDosDos"
+        android:layout_alignRight="@+id/bDosDos"
+        android:layout_alignStart="@+id/bDosDos"
+        android:layout_marginBottom="10sp"
+        android:gravity="center"
+        android:text="Costo 2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bDosTres"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvDosTres"
+        android:layout_centerHorizontal="true"
+        android:text="Libre"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvDosTres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonSolicitarServicio"
+        android:layout_alignEnd="@+id/bDosTres"
+        android:layout_alignRight="@+id/bDosTres"
+        android:layout_marginBottom="10sp"
+        android:layout_toRightOf="@+id/bTUnoTres"
+        android:gravity="center"
+        android:text="Costo 3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bTUnoTres"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bDosTres"
+        android:layout_alignBottom="@+id/bDosTres"
+        android:layout_marginRight="15sp"
+        android:layout_toLeftOf="@+id/bDosTres"
+        android:layout_toStartOf="@+id/bDosTres"
+        android:text="Taxi"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvTresUno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCancelarSolicitar"
+        android:layout_alignEnd="@+id/bTUnoTres"
+        android:layout_alignLeft="@+id/bTUnoTres"
+        android:layout_alignRight="@+id/bTUnoTres"
+        android:layout_alignStart="@+id/bTUnoTres"
+        android:layout_marginBottom="10sp"
+        android:gravity="center"
+        android:text="Costo 3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvTresTres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonSolicitarServicio"
+        android:layout_alignEnd="@+id/bTresTres"
+        android:layout_alignLeft="@+id/bTresTres"
+        android:layout_alignRight="@+id/bTresTres"
+        android:layout_alignStart="@+id/bTresTres"
+        android:layout_marginBottom="10sp"
+        android:gravity="center"
+        android:text="Costo3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bTresTres"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvDosTres"
+        android:layout_marginLeft="15sp"
+        android:layout_toEndOf="@+id/bDosTres"
+        android:layout_toRightOf="@+id/bDosTres"
+        android:text="Lujo"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvDosCuatro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCancelarSolicitar"
+        android:layout_alignEnd="@+id/bDosCuatro"
+        android:layout_alignLeft="@+id/bDosCuatro"
+        android:layout_alignRight="@+id/bDosCuatro"
+        android:layout_alignStart="@+id/bDosCuatro"
+        android:layout_marginBottom="10sp"
+        android:gravity="center"
+        android:text="Costo 4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bDosCuatro"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvDosCuatro"
+        android:layout_marginLeft="5sp"
+        android:layout_marginStart="5sp"
+        android:layout_toEndOf="@+id/tvUnoCuatro"
+        android:layout_toRightOf="@+id/tvUnoCuatro"
+        android:background="#00000000"
+        android:text="Libre"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvUnoCuatro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCancelarSolicitar"
+
+        android:layout_alignEnd="@+id/bUnoCuatro"
+        android:layout_alignLeft="@+id/bUnoCuatro"
+        android:layout_alignRight="@+id/bUnoCuatro"
+        android:layout_alignStart="@+id/bUnoCuatro"
+        android:layout_marginBottom="10sp"
+        android:gravity="center"
+        android:text="Costo4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bUnoCuatro"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvUnoCuatro"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#e6333333"
+        android:paddingLeft="5sp"
+        android:paddingStart="5sp"
+        android:text="Taxi"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvCuatroCuatro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonSolicitarServicio"
+        android:layout_alignEnd="@+id/bCuatroCuatro"
+        android:layout_alignLeft="@+id/bCuatroCuatro"
+        android:layout_alignRight="@+id/bCuatroCuatro"
+        android:layout_alignStart="@+id/bCuatroCuatro"
+        android:layout_marginBottom="10sp"
+        android:gravity="center"
+        android:text="Costo 4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bCuatroCuatro"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvCuatroCuatro"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:paddingEnd="5sp"
+        android:paddingRight="5sp"
+        android:text="Sub-Urban"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvTresCuatro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonSolicitarServicio"
+        android:layout_alignLeft="@+id/bTresCuatro"
+        android:layout_alignStart="@+id/bTresCuatro"
+        android:layout_marginBottom="10sp"
+        android:layout_toLeftOf="@+id/tvCuatroCuatro"
+        android:layout_toStartOf="@+id/tvCuatroCuatro"
+        android:gravity="center"
+        android:text="Costo 4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/bTresCuatro"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bCuatroCuatro"
+        android:layout_alignBottom="@+id/bCuatroCuatro"
+        android:layout_marginEnd="5sp"
+        android:layout_marginRight="5sp"
+        android:layout_toLeftOf="@+id/bCuatroCuatro"
+        android:layout_toStartOf="@+id/bCuatroCuatro"
+        android:text="Lujo"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/patchTocaA1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/autoCompleteTextView"
+        android:layout_alignBottom="@+id/autoCompleteTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10sp"
+        android:text="                        (toca para cambiar)"
+        android:textColor="#bdbdbd"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/smBack"
+        android:layout_width="wrap_content"
+        android:layout_height="90sp"
+        android:layout_above="@+id/cancelarServicio"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:background="#d4111111"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/smUnidad"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/smBack"
+        android:layout_toEndOf="@+id/place_details"
+        android:layout_toRightOf="@+id/place_details"
+        android:visibility="gone"
+        app:srcCompat="@drawable/caricon" />
+
+    <TextView
+        android:id="@+id/smMarcaModelo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/smBack"
+        android:layout_marginLeft="8sp"
+        android:layout_marginStart="8sp"
+        android:layout_marginTop="5sp"
+        android:layout_toEndOf="@+id/smUnidad"
+        android:layout_toRightOf="@+id/smUnidad"
+        android:text="Nissan altima"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/com_facebook_button_background_color_focused"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/smClr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/smMarcaModelo"
+        android:layout_marginLeft="15sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="5sp"
+        android:layout_toRightOf="@+id/smUnidad"
+        android:text="Color "
+        android:textColor="@color/com_facebook_button_background_color_focused"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/smColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/smMarcaModelo"
+        android:layout_marginTop="5sp"
+        android:layout_toEndOf="@+id/smClr"
+        android:layout_toRightOf="@+id/smClr"
+        android:text="Blanco "
+        android:textColor="@color/com_facebook_button_background_color_focused"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/smPlcs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/smClr"
+        android:layout_marginLeft="15sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="5sp"
+        android:layout_toEndOf="@+id/smUnidad"
+        android:layout_toRightOf="@+id/smUnidad"
+        android:text="Placas "
+        android:textColor="@color/com_facebook_button_background_color_focused"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/smPlacas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/smColor"
+        android:layout_marginTop="5sp"
+        android:layout_toEndOf="@+id/smPlcs"
+        android:layout_toRightOf="@+id/smPlcs"
+        android:text="LOK 00 LIND"
+        android:textColor="@color/com_facebook_button_background_color_focused"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/tvDenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:drawableRight="@drawable/places_ic_search"
+        android:layout_alignParentTop="true"
+        android:background="#424242"
+        android:hint="Buscar..."
+        android:textColor="@android:color/white" />
+
+
+</RelativeLayout>

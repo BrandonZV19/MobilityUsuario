@@ -1,0 +1,161 @@
+<resources>
+    <string name="app_name">Mobility Usuario</string>
+    <string name="title_activity_login">Login</string>
+    <string name="version">mu2.0</string>
+
+
+    <string name="facebook_app_id">1912478365697701</string>
+    <string name="fb_login_protocol_scheme">fb1912478365697701</string>
+
+    <string name="imagenesLugaresURLCanaco">http://softtim.mx/canaco/assets/img/lugares/</string>
+    <string name="imagenesLugaresURLTaxi">http://softtim.mx/mobilityV2/assets/img/negocios/</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="string_cancelar">Cancelar</string>
+    <string name="string_continuar">Continuar</string>
+    <string name="string_aceptar">Aceptar</string>
+    <string name="mainURL">http://softtim.mx/mobilityV2</string>
+    <string name="preferences">MobilityUsuario</string>
+    <string name="accediendo">Accediendo</string>
+    <string name="campos_vacio">Algun campo esta vacio</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="Usuario">Usuario</string>
+    <string name="Contraseña">Contraseña</string>
+    <string name="imagen">Imagen</string>
+
+    <string name="p_id_usuario">idUsuario</string>
+    <string name="p_nick">nick</string>
+    <string name="p_username">username</string>
+    <string name="p_pass">password</string>
+    <string name="p_sesion">mySesion</string>
+    <string name="p_id_fb">myFBID</string>
+    <string name="p_name">myName</string>
+    <string name="p_mail">myEmail</string>
+    <string name="p_tel">myTel</string>
+
+    <string name="action_locate">Ubicar</string>
+    <string name="action_panic">Panico</string>
+
+    <string name="action_refresh">Refrescar</string>
+    <string name="place_details"></string>
+
+    <string name="current_service">currentService</string>
+    <string name="current_status">currentStatus</string>
+    <string name="current_confirmado">currentConfirmado</string>
+    <string name="current_cancelado">currentCancelado</string>
+    <string name="current_cancelado_v">currentCanceladoV</string>
+    <string name="current_costo_usuario">currentCostoUsuario</string>
+    <string name="current_costo_conductor">currentCostoConductor</string>
+    <string name="current_costo_sugerido">currentCostoSugerido</string>
+    <string name="current_llego_origen">currentLLegadaOrigen</string>
+    <string name="title_activity_historial">Historial</string>
+    <string name="current_calificado">currentCalificado</string>
+    <string name="current_acreditado_pp">currentAcreditadoPP</string>
+    <string name="current_costo_pp">currentCostoPP</string>
+    <string name="current_solicitado_pp">currentSolicitadoPP</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="currentAccessToken">currentAccessToken</string>
+
+    <string name="factor_metro_4_1">dFactorMetro41</string>
+    <string name="factor_segundo_4_1">dFactorSegundo41</string>
+    <string name="factor_metro_4_2">dFactorMetro42</string>
+    <string name="factor_segundo_4_2">dFactorSegundo42</string>
+    <string name="factor_metro_4_3">dFactorMetro43</string>
+    <string name="factor_segundo_4_3">dFactorSegundo43</string>
+    <string name="factor_metro_4_4">dFactorMetro44</string>
+    <string name="factor_segundo_4_4">dFactorSegundo44</string>
+
+    <string name="factor_metro_3_1">dFactorMetro31</string>
+    <string name="factor_segundo_3_1">dFactorSegundo31</string>
+    <string name="factor_metro_3_2">dFactorMetro32</string>
+    <string name="factor_segundo_3_2">dFactorSegundo32</string>
+    <string name="factor_metro_3_3">dFactorMetro33</string>
+    <string name="factor_segundo_3_3">dFactorSegundo33</string>
+
+    <string name="factor_metro_2_1">dFactorMetro21</string>
+    <string name="factor_segundo_2_1">dFactorSegundo21</string>
+    <string name="factor_metro_2_2">dFactorMetro22</string>
+    <string name="factor_segundo_2_2">dFactorSegundo22</string>
+
+    <string name="factor_metro_1_1">dFactorMetro11</string>
+    <string name="factor_segundo_1_1">dFactorSegundo11</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+</resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1008392655422",
+    "firebase_url": "https://mobilityusuario.firebaseio.com",
+    "project_id": "mobilityusuario",
+    "storage_bucket": "mobilityusuario.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008392655422:android:2246a195ebd86832",
+        "android_client_info": {
+          "package_name": "com.softtim.mobilityusuario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008392655422-nkdao1c9qo8ln40ch16vf21bonq8ussk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.softtim.mobilityusuario",
+            "certificate_hash": "086faf6efc2467ca1370cdb8e3d2ba92a488bf6b"
+          }
+        },
+        {
+          "client_id": "1008392655422-fcdqf3habod41a8ggocaup9daqde89i0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYfkiYBtrHbVFnn05xVAxTSHc86VXG1x8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008392655422-fcdqf3habod41a8ggocaup9daqde89i0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
