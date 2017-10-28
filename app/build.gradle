@@ -7,8 +7,8 @@ android {
         applicationId 'com.softtim.mobilityusuario'
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 13
-        versionName "1.03"
+        versionCode 15
+        versionName "1.05"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }

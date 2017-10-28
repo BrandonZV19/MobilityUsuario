@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Mobility Usuario</string>
     <string name="title_activity_login">Login</string>
-    <string name="version">mu2.0</string>
+    <string name="version">mu2.1.1</string>
 
 
     <string name="facebook_app_id">1912478365697701</string>
@@ -25,7 +25,7 @@
     <string name="title_activity_maps">Map</string>
 
     <string name="iniciar_sesion">Iniciar Sesión</string>
-    <string name="Usuario">Usuario</string>
+    <string name="Usuario">email o número celular</string>
     <string name="Contraseña">Contraseña</string>
     <string name="imagen">Imagen</string>
 
@@ -84,6 +84,7 @@
     <string name="factor_segundo_2_2">dFactorSegundo22</string>
 
     <string name="factor_metro_1_1">dFactorMetro11</string>
+    <string name="current_alertas">currentAlertas</string>
     <string name="factor_segundo_1_1">dFactorSegundo11</string>
 
     <!-- Strings related to Settings -->

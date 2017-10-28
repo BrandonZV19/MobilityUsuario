@@ -9,11 +9,8 @@
     <Button
         android:id="@+id/hechoPP"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:background="@color/colorPrimary"
         android:text="Hecho"
         app:layout_constraintBottom_toBottomOf="parent"

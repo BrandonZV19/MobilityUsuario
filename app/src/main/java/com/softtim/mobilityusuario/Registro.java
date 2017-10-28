@@ -330,6 +330,10 @@ public class Registro extends AppCompatActivity {
 
                 enviar.setEnabled(true);
                 progressDialog.dismiss();
+                Toast.makeText(Registro.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                Intent redirecLogin = new Intent(getBaseContext(),LoginActivity.class);
+
+                startActivity(redirecLogin);
             }
 
             @Override

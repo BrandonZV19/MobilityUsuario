@@ -117,7 +117,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-                android:hint="Ingresa tu nombre completo"
+                android:hint="Ingresa tu nombre"
                 android:inputType="textPersonName"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"

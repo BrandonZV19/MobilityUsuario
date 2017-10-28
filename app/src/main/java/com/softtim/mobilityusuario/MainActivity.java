@@ -48,6 +48,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -119,13 +120,13 @@ public class MainActivity extends AppCompatActivity
         GoogleApiClient.OnConnectionFailedListener  {
 
     HashMap<Integer,Marker> markerHashMap;
-    View vCompar, vLugar;
+    View vCompar, vLugar, vComparIn;
     TextView vcUser,vcStatus,vcMarcaModelo,vcPlacas,vcColor,vcAño;
     TextView vlTitulo,vlDescripcion,vlHorario,vlDireccion;
     ImageView vlImagen;
-    EditText tvDenue;
+    EditText tvDenue, vComparInET;
     ImageView unidadCM;
-    AlertDialog dialogCompar, dialogLugar;
+    AlertDialog dialogCompar, dialogLugar, dialogComparIn;
     int MY_PERMISSIONS_REQUEST_LOCATION=1,MENU_ITEM_SHARE=2,MENU_ITEM_CONDUC=3,MY_PERMISSIONS_REQUEST_CALL = 9;
     Marker mOrigen, mDestino,mLocation, mTaxi;
     String LOG_TAG="MainActivity";
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity
     GoogleApiClient mGoogleApiClient;
     long MIN_TIME_BW_UPDATES=1000 * 10;
     double costSelected;
-    int  typeSelected=0, metros,segundos,cntLibre=0;
+    int  typeSelected=0, metros,segundos,cntLibre=0,numAlertas;
     double latO=0, longO=0, latD=0, longD=0;
     isBetterLocation isBetter=new isBetterLocation();
     boolean shouldEnd=false,resumed,originLocation=false, currentValid = false, isFirstTime=true,
@@ -180,6 +181,7 @@ public class MainActivity extends AppCompatActivity
     TextView ducNombre, ducTel, ducMail, ducMarcaModelo, ducAño, ducPlacas;
     ImageView ducConductor,ducUnidad,smUnidad;
     AlertDialog dialogServicio;
+    ImageButton panic;
     PlaceAutocompleteAdapter mAdapter;
     TextView mPlaceDetailsText,mPlaceDetailsAttribution;
     HashMap<Integer,Marker> markersUnidadesCercanas,markersCompartidos;
@@ -1015,7 +1017,11 @@ public class MainActivity extends AppCompatActivity
         tvDenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               if (!tvDenue.isCursorVisible()) {
+                   tvDenue.setCursorVisible(true);
+               }
                 searchEvent();
+                   tvDenue.setCursorVisible(false);
             }
         });
         tvDenue.setOnKeyListener(new View.OnKeyListener() {
@@ -1047,6 +1053,19 @@ public class MainActivity extends AppCompatActivity
         estado.setVisibility(View.GONE);
 
         navigationMenu=navigationView.getMenu();
+
+
+        panic=(ImageButton)findViewById(R.id.buttonCallPanic);
+        panic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO falta
+                //Webservice para informar sobre el conductor, el webservice manda la alerta a todas las demas unidades
+
+                panicRequest();
+
+            }
+        });
 
     }
 
@@ -1317,37 +1336,172 @@ public class MainActivity extends AppCompatActivity
     private void compartirCon(){
         preferences=getApplicationContext().getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
         if (preferences.contains(getString(R.string.p_id_fb))) {
-            fbID=preferences.getString(getString(R.string.p_id_fb),"");
 
-            final JSONObject[] data = new JSONObject[1];
-            final JSONArray[] amigos = new JSONArray[1];
-
-            new GraphRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "/"+fbID+"/friends/",
-                    null,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                                                /* handle the result */
-                            Log.e(LOG_TAG, "friends gresp= " + response.toString());
-                            try {
-
-                                amigos[0]=response.getJSONObject().getJSONArray("data");
-                                Log.e("FG data", amigos[0].toString());
-
-                            } catch (JSONException e) {
-                                Log.e("Exepction post graph", e.toString());
-                                e.printStackTrace();
+            //Significa que ya tiene informacion de FB, puede compartir por medio de FB o email
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Compartir per medio de: ")
+                    .setTitle(Html.fromHtml("<font color='#000000'>Compartir</font>"))
+                    .setCancelable(false)
+                    .setPositiveButton("Telefono/E-mail", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Call method to post by mail
+                            //compartidoIn
+                            if (vComparIn != null) {
+                                vComparIn = null;
                             }
 
-                            postCompartir(amigos[0]);
+                            vComparIn = inflater.inflate(R.layout.ingresa_email_compartir, null);
+                            vComparInET = (EditText) vComparIn.findViewById(R.id.viewCompartirIn);
+
+
+                            if (dialogComparIn != null) {
+                                if (dialogComparIn.isShowing()) {
+                                    dialogComparIn.dismiss();
+                                }
+                                dialogComparIn = null;
+                            }
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            //gg
+                                            if (vComparInET.getText().toString().contains("@") ||
+                                                    vComparInET.getText().toString().trim().length()>9){
+                                                //Faltaria un try catch con number format exception
+                                                String datosToPost=vComparInET.getText().toString().trim();
+                                                postCompartirNotFB(datosToPost);
+                                                dialogInterface.dismiss();
+
+                                            }else {
+                                                //No es un email o no es un numero valido
+                                                Toast.makeText(MainActivity.this, "Por favor ingresa los datos correctamente", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    });
+
+                            if (vComparIn.getParent() == null) {
+                                dialogComparIn = builder.create();
+                                dialogComparIn.setView(vComparIn);
+                                dialogComparIn.show();
+                            } else {
+                                vComparIn = null;
+
+                                vComparIn = inflater.inflate(R.layout.ingresa_email_compartir, null);
+                                vComparInET = (EditText) vComparIn.findViewById(R.id.viewCompartirIn);
+
+                                dialogComparIn = builder.create();
+                                dialogComparIn.setView(vComparIn);
+                                dialogComparIn.show();
+                            }
+                            //End comparIn
 
                         }
-                    }
-            ).executeAsync();
+                    })
+                    .setNegativeButton("Facebook",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //Call method to post my fb id
+                                    fbID=preferences.getString(getString(R.string.p_id_fb),"");
+
+                                    final JSONObject[] data = new JSONObject[1];
+                                    final JSONArray[] amigos = new JSONArray[1];
+
+                                    new GraphRequest(
+                                            AccessToken.getCurrentAccessToken(),
+                                            "/"+fbID+"/friends/",
+                                            null,
+                                            HttpMethod.GET,
+                                            new GraphRequest.Callback() {
+                                                public void onCompleted(GraphResponse response) {
+                                                /* handle the result */
+                                                    Log.e(LOG_TAG, "friends gresp= " + response.toString());
+                                                    try {
+
+                                                        amigos[0]=response.getJSONObject().getJSONArray("data");
+                                                        Log.e("FG data", amigos[0].toString());
+
+                                                    } catch (JSONException e) {
+                                                        Log.e("Exepction post graph", e.toString());
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    postCompartir(amigos[0]);
+
+                                                }
+                                            }
+                                    ).executeAsync();
+                                }
+                            }).show();
+
         }else {
             //Error
+            //solo por email
+
+            //compartidoIn
+            if (vComparIn != null) {
+                vComparIn = null;
+            }
+
+            vComparIn = inflater.inflate(R.layout.ingresa_email_compartir, null);
+            vComparInET = (EditText) vComparIn.findViewById(R.id.viewCompartirIn);
+
+
+            if (dialogComparIn != null) {
+                if (dialogComparIn.isShowing()) {
+                    dialogComparIn.dismiss();
+                }
+                dialogComparIn = null;
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //gg
+                            if (vComparInET.getText().toString().contains("@") ||
+                                    vComparInET.getText().toString().trim().length()>9){
+                                //Faltaria un try catch con number format exception
+                                String datosToPost=vComparInET.getText().toString().trim();
+                                postCompartirNotFB(datosToPost);
+                                dialogInterface.dismiss();
+
+                            }else {
+                                //No es un email o no es un numero valido
+                                Toast.makeText(MainActivity.this, "Por favor ingresa los datos correctamente", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+            if (vComparIn.getParent() == null) {
+                dialogComparIn = builder.create();
+                dialogComparIn.setView(vComparIn);
+                dialogComparIn.show();
+            } else {
+                vComparIn = null;
+
+                vComparIn = inflater.inflate(R.layout.ingresa_email_compartir, null);
+                vComparInET = (EditText) vComparIn.findViewById(R.id.viewCompartirIn);
+
+                dialogComparIn = builder.create();
+                dialogComparIn.setView(vComparIn);
+                dialogComparIn.show();
+            }
+            //End comparIn
+
         }
 
     }
@@ -1416,10 +1570,63 @@ public class MainActivity extends AppCompatActivity
             });
 
         }
+    }
 
+    public void postCompartirNotFB(String datapost){
+        if (progressDialog!=null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            Log.e("dismiss in","requestCancelar before");
+        }
+        progressDialog=null;
+        if(MainActivity.this.getParent()!=null){
+            progressDialog=new ProgressDialog(MainActivity.this.getParent());
+        }else{
+            progressDialog=new ProgressDialog(MainActivity.this);
+        }
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Cargando...");
+        if(!MainActivity.this.isFinishing()) {
+            progressDialog.show();
+            Log.e("show in","requestCancelar");
+        }
 
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        RequestParams parametros = new RequestParams();
+        String url = getString(R.string.mainURL)+"/Usuario/compartir_servicio"; //Falta url de este webservice
+        parametros.put("idUsuario", idUsuario);
+        parametros.put("idServicio", currentService);
+        parametros.put("", datapost); //Aqui el nombre de como lo recibe el servidor
 
+        Log.e(LOG_TAG," compartirNotFB idServicio "+currentService +" idUsuario "+idUsuario+ " data= " + datapost);
 
+        cliente.post(url, parametros, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response=new String(responseBody);
+
+                Log.e(LOG_TAG," compartir Reponse: "+response);
+
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    Log.e("dismiss in", "requestCancelar last");
+                }
+
+                Toast.makeText(MainActivity.this,"Servicio compartido correctamente",Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.e("cancelarServicio","Failed "+statusCode);
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    Log.e("dismiss in", "requestCancelar last");
+                }
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Error de conexión "+statusCode+".\nPor favor intentalo de nuevo mas tarde.", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
@@ -1943,6 +2150,9 @@ public class MainActivity extends AppCompatActivity
          * 1 es sesion valida, 0 es sesion invalida (cerrar sesion).
          */
 
+        //initialize alertas
+        final int[] alertas = new int[1];
+
         final String[] login = new String[1];
         final String[] servicioActivo = new String[1];
         final String[] servicioCompartido = new String[1];
@@ -2006,6 +2216,10 @@ public class MainActivity extends AppCompatActivity
                     servicioActivo[0] = jsonObject[0].getString("servicioActivo");
                     servicioCompartido[0] = jsonObject[0].getString("servicioCompartido");
                     publicidad[0] = jsonObject[0].getString("publicidad");
+
+                    // get alerts
+                    alertas[0] = jsonObject[0].getInt("alertas");
+
                     Log.e(LOG_TAG, "response:"+new String(responseBody));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2306,6 +2520,8 @@ public class MainActivity extends AppCompatActivity
 
                             BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markercompartido);
 
+                            int idS=0;
+
                         for (int x=0; x<serviciosCompartidos.length(); x++){
                             //TODO:
                             //Llenar la base de datos de servicios compartidos con cada json y sus datos
@@ -2314,7 +2530,7 @@ public class MainActivity extends AppCompatActivity
                             final Compartido compartido=new Compartido();
 
                             String userName=serviciosCompartidos.getJSONObject(x).getJSONObject("usuarioAlta").getString("aNombreUsuario");
-                            int idS=serviciosCompartidos.getJSONObject(x).getInt("idServicio");
+                            idS=serviciosCompartidos.getJSONObject(x).getInt("idServicio");
                             String placas=serviciosCompartidos.getJSONObject(x).getString("aPlacas");
                             String marca=serviciosCompartidos.getJSONObject(x).getString("aMarca");
                             String modelo=serviciosCompartidos.getJSONObject(x).getString("aModelo");
@@ -2383,6 +2599,8 @@ public class MainActivity extends AppCompatActivity
                             listCompartidos.add(compartido);
                         }
 
+                        final int lastIDS=idS;
+
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {
@@ -2397,13 +2615,24 @@ public class MainActivity extends AppCompatActivity
 
                             if (serviciosCompartidos.length()<=1){
                                 Snackbar.make(getWindow().getDecorView().getRootView(), "Tienes un servicio compartido", Snackbar.LENGTH_LONG)
-                                        .setAction("", new View.OnClickListener() {
+                                        .setAction("Ver", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 //TODO:
-                                                //Llamar metodo para mostrar servicios compartidos
+                                                //Opcion para llevarlo al marker
+                                                if(markerHashMapCom!=null){
+
+                                                    if (markerHashMapCom.containsKey(lastIDS)){
+                                                        LatLng position = markerHashMapCom.get(lastIDS).getPosition();
+                                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,mMap.getCameraPosition().zoom));
+                                                        //faltaria mostrar automaticamente
+                                                        //Algun callonMarkerClick
+
+                                                    }
+                                                }
                                             }
                                         }).show();
+
                             }else if (serviciosCompartidos.length()>1){
                                 Snackbar.make(getWindow().getDecorView().getRootView(), "Tienes "+ serviciosCompartidos.length() +" servicios compartidos", Snackbar.LENGTH_LONG)
                                         .setAction("", new View.OnClickListener() {
@@ -2411,6 +2640,18 @@ public class MainActivity extends AppCompatActivity
                                             public void onClick(View view) {
                                                 //TODO:
                                                 //Llamar metodo para mostrar servicios compartidos
+                                                //Como un listview de los servicios que tenga compartidos
+
+                                                //Solo mostrara el ultimo
+
+                                                if(markerHashMapCom!=null){
+
+                                                    if (markerHashMapCom.containsKey(lastIDS)){
+                                                        LatLng position = markerHashMapCom.get(lastIDS).getPosition();
+                                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,mMap.getCameraPosition().zoom));
+                                                    }
+                                                }
+
                                             }
                                         }).show();
                             }
@@ -2587,6 +2828,135 @@ public class MainActivity extends AppCompatActivity
 
                     }
                     }
+
+                if (alertas[0]!=0){
+                    Log.e(LOG_TAG," getCurrentStatus alertas not 0");
+
+                    final int[] id = new int[1];
+                    final String[] nombre = new String[1];
+                    final String[] nombre2 = new String[1];
+                    final String[] nombre3 = new String[1];
+                    final String[] fecha = new String[1];
+                    final double[] lat =new double[1];
+                    final double[] lng =new double[1];
+
+
+
+
+                    final JSONArray[] jsonArray = new JSONArray[1];
+                    try {
+                        jsonArray[0]=new JSONArray(new String(responseBody));
+                        for (int x=0;x<jsonArray[0].length();x++){
+                            Log.e("For", x+ " lenght " + jsonArray[0].length());
+
+
+                            id[0]=jsonArray[0].getJSONObject(x).getInt("idPanico");
+                            nombre[0]=jsonArray[0].getJSONObject(x).getString("aNombreConductor");
+                            nombre2[0]=jsonArray[0].getJSONObject(x).getString("aApellidoPatConductor");
+                            nombre3[0]=jsonArray[0].getJSONObject(x).getString("aApellidoMatConductor");
+                            fecha[0]=jsonArray[0].getJSONObject(x).getString("fFechaHoraAltaAlerta");
+                            lat[0]=jsonArray[0].getJSONObject(x).getDouble("dLatitudAlerta");
+                            lng[0]=jsonArray[0].getJSONObject(x).getDouble("dLongitudAlerta");
+
+                            String nom=nombre[0]+" "+nombre2[0]+" "+nombre3[0];
+
+                            final Panico panico =new Panico();
+
+
+
+                            panico.setIDalerta(id[0]);
+                            panico.setNombre(nom);
+                            panico.setFecha(fecha[0]);
+                            panico.setLatitud(lat[0]);
+                            panico.setLongitud(lng[0]);
+
+                            numAlertas=jsonArray.length;
+                            int numAP=preferences.getInt(getString(R.string.current_alertas),0);
+
+                            if (realm!=null && realm.isClosed()){
+                                RealmConfiguration config = new RealmConfiguration
+                                        .Builder()
+                                        .deleteRealmIfMigrationNeeded()
+                                        .build();
+
+                                Realm.setDefaultConfiguration(config);
+
+                                realm=Realm.getDefaultInstance();
+                                realm.setAutoRefresh(true);
+                            }
+
+                            if (numAP!=numAlertas){
+                                final RealmResults<Panico> results = realm.where(Panico.class).findAll();
+
+                                // All changes to data must happen in a transaction
+                                realm.executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) {
+                                        results.deleteAllFromRealm();
+                                    }
+                                });
+                            }
+
+                            realm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    // This will create a new object in Realm or throw an exception if the
+                                    // object already exists (same primary key)
+                                    // realm.copyToRealm(obj);
+
+                                    // This will update an existing object with the same primary key
+                                    // or create a new one if the primary key doesn't exists
+                                    realm.copyToRealmOrUpdate(panico);
+                                }
+                            });
+
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                   int numAP=preferences.getInt(getString(R.string.current_alertas),0);
+
+                    if (numAlertas<numAP){
+                        int diff=numAP-numAlertas;
+
+                        if (diff==1){
+                            Snackbar.make(getWindow().getDecorView().getRootView(), "Hay una alerta nueva.", Snackbar.LENGTH_LONG)
+                                    .setAction("Ver ", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intentAl = new Intent(MainActivity.this, EmergenciasActivity.class);
+                                            startActivity(intentAl);
+                                        }
+                                    }).show();
+                        }else {
+                            Snackbar.make(getWindow().getDecorView().getRootView(), "Hay "+diff+" alertas nuevas.", Snackbar.LENGTH_LONG)
+                                    .setAction("Ver ", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intentAl = new Intent(MainActivity.this, EmergenciasActivity.class);
+                                            startActivity(intentAl);
+                                        }
+                                    }).show();
+                        }
+                        //Inform new alerts
+                    }
+
+                    SharedPreferences.Editor editor=preferences.edit();
+                    editor.putInt(getString(R.string.current_alertas),numAlertas);
+                    editor.commit();
+
+
+                }else {
+                    Log.e(LOG_TAG," getCurrentStatus alertas 0");
+                    numAlertas=0;
+                    SharedPreferences.Editor editor=preferences.edit();
+                    editor.putInt(getString(R.string.current_alertas),numAlertas);
+                    editor.commit();
+
+                }
 
                 if ( progressDialog.isShowing() && (!isFirstTime || currentStatus>=1 || shouldEnd)) {
                         progressDialog.dismiss();
@@ -5052,6 +5422,7 @@ public class MainActivity extends AppCompatActivity
                         if(costDosTres<40){
                             costDosTres=40;
                         }
+                        //incrementar +100
                         Log.e("costo",costDosTres+"");
                         int cost22=(int)costDosTres;
                         Log.e("costo int ",cost22+"");
@@ -5074,12 +5445,13 @@ public class MainActivity extends AppCompatActivity
                         if(costTresTres<40){
                             costTresTres=40;
                         }
+                        //incrementar +50
                         Log.e("costo",costTresTres+"");
                         int cost33=(int)costTresTres;
                         Log.e("costo int ",cost33+"");
                         String cost3=variacion(cost33,3);
                         costoTresTres.setVisibility(View.VISIBLE);
-                        costoTresTres.setText(cost3);
+                        costoTresTres.setText(cost3);// no mostrar precios
                         costoTresTres.setTag(costTresTres);
 
                         editor.putFloat(getString(R.string.factor_metro_3_3),(float)metro[2]);
@@ -5314,4 +5686,44 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
+    private void panicRequest(){
+        Log.e(LOG_TAG, "PANIC get before U" + idUsuario);
+
+        double lat=currentLocation.getLatitude();
+        double lng=currentLocation.getLongitude();
+
+        AsyncHttpClient cliente=new AsyncHttpClient();
+        String url=getString(R.string.mainURL)+"/Conductor/agregar_alerta"; //pendiente url
+        RequestParams params=new RequestParams();
+        params.put("idUsuario",idUsuario); //pendiente parametros a enviar
+        params.put("dLatitud",lat);
+        params.put("dLongitud",lng);
+
+        cliente.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody);
+                Log.e(LOG_TAG, "get resp " + response);
+
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Enviado.", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                panic.setEnabled(false);
+                panic.setColorFilter(Color.GRAY);
+
+                //Se puede repetir la solicitud de panico?
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.e(LOG_TAG, "get statusCode" + statusCode);
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Error de conexión " + statusCode + ".\nPor favor intentalo de nuevo mas tarde.", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+
+
 }
